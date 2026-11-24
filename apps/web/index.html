@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pure Scribe — Ambient AI Medical Scribe for Private Clinics | Pure Path</title>
+    <meta
+      name="description"
+      content="Pure Scribe by Pure Path is an ambient AI medical scribe for private and specialty clinics. Drafts structured EMR notes, fills unanswered fields in one click, integrates with DrChrono and major EHRs, and shreds raw transcripts after transfer."
+    />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <link rel="canonical" href="https://purepathwebsolutions.com/purescribe" />
+    <link rel="icon" type="image/png" href="./brand/pure-path-mark.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pure Path" />
+    <meta property="og:url" content="https://purepathwebsolutions.com/purescribe" />
+    <meta property="og:title" content="Pure Scribe — Ambient AI Medical Scribe for Private Clinics" />
+    <meta
+      property="og:description"
+      content="Turn patient visits into structured notes tailored to your EMR, resolve unanswered fields in one click, and automatically shred raw transcripts."
+    />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pure Scribe — Ambient AI Medical Scribe | Pure Path" />
+    <meta
+      name="twitter:description"
+      content="Ambient AI medical scribe with custom EMR integration, 1-click gap completion, and zero-retention transcript purging."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Onest:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data (SEO & AEO: Organization, SoftwareApplication, BreadcrumbList, FAQPage) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://purepathwebsolutions.com/#organization",
+            "name": "Pure Path",
+            "url": "https://purepathwebsolutions.com",
+            "logo": "https://purepathwebsolutions.com/brand/pure-path-mark.png"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://purepathwebsolutions.com/purescribe#software",
+            "name": "Pure Scribe",
+            "applicationCategory": "HealthApplication",
+            "operatingSystem": "Web, Chrome Extension",
+            "url": "https://purepathwebsolutions.com/purescribe",
+            "publisher": { "@id": "https://purepathwebsolutions.com/#organization" },
+            "description": "Ambient AI medical scribe for private and specialty clinics featuring custom EMR integration, 1-click unanswered-field completion, and zero-retention RAM transcript purging."
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Pure Path",
+                "item": "https://purepathwebsolutions.com"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Pure Scribe",
+                "item": "https://purepathwebsolutions.com/purescribe"
+              }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How does Pure Scribe integrate with clinic EMRs like DrChrono?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Pure Path works directly with your practice to map custom specialty templates and integrate Pure Scribe into your EMR—supporting DrChrono API and browser side-panel workflows as well as major clinic EHR systems."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What happens to the raw encounter transcript after the note is filled?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Pure Scribe holds transcripts strictly in volatile memory (RAM) during review. Once the structured note is transferred to your EMR, the raw transcript buffer is overwritten with zeros and discarded with a PHI-free verification receipt."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How does Pure Scribe handle clinical details that were not spoken aloud?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Rather than fabricating unverified statements into completed fields, Pure Scribe flags unanswered or incomplete fields inline and presents context-aware options that the physician can verify and insert in one click."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How does Pure Scribe work with Pure Knowledge?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Pure Knowledge is Pure Path's AI brain for your business—connecting clinic SOPs, fee schedules, prior-authorization criteria, and operational workflows alongside Pure Scribe's clinical documentation."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body class="bg-white text-[#0b162c] antialiased selection:bg-[#dbeafe] selection:text-[#1d4ed8]">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

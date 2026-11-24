@@ -1,0 +1,19 @@
+{
+  "name": "medscribe-pain-pro",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Pain Management AI Medical Scribe with Ephemeral Fill-and-Purge Privacy and DrChrono EMR Integration",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@medscribe/web",
+    "build": "npm run build --workspace=@medscribe/core && npm run build --workspace=@medscribe/web && npm run build --workspace=@medscribe/extension",
+    "build:core": "npm run build --workspace=@medscribe/core",
+    "build:web": "npm run build --workspace=@medscribe/web",
+    "build:extension": "npm run build --workspace=@medscribe/extension",
+    "test": "npm run test --workspace=@medscribe/core",
+    "typecheck": "npm run typecheck --workspace=@medscribe/core && npm run typecheck --workspace=@medscribe/web && npm run typecheck --workspace=@medscribe/extension"
+  }
+}

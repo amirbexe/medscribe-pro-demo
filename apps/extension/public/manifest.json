@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "MedScribe Pain Pro — DrChrono AI Scribe",
+  "version": "2.0.0",
+  "description": "Pain Management AI medical scribe for DrChrono with 1-click gap filling, MME/PEG-3 alerts, and strict zero-retention transcript purging.",
+  "permissions": ["sidePanel", "activeTab", "scripting"],
+  "host_permissions": ["https://*.drchrono.com/*"],
+  "action": {
+    "default_title": "Open MedScribe Pain Pro"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.drchrono.com/*"],
+      "js": ["content-drchrono.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

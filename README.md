@@ -1,378 +1,89 @@
-# 🎙️ MedScribe Pro - AI Medical Transcription Extension
+# MedScribe Pain Pro — Pain Management AI Medical Scribe
 
-[![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-blue.svg)](https://github.com/abaker11/medscribe-pro-demo)
-[![AI Powered](https://img.shields.io/badge/AI-Powered-green.svg)](https://www.anthropic.com/claude)
-[![HIPAA](https://img.shields.io/badge/HIPAA-Compliant-red.svg)]()
-[![DrChrono](https://img.shields.io/badge/DrChrono-Integration-orange.svg)](https://www.drchrono.com/)
+> **Pain Management-specialized AI medical scribe with 1-click AI gap filling, CDC MME & PEG-3 clinical intelligence, DrChrono EMR integration, and Strict Fill-and-Purge zero transcript retention.**
 
-> **Professional medical transcription extension with comprehensive EHR integration and enterprise-grade security**
-
-MedScribe Pro is a Chrome extension designed for healthcare professionals to streamline clinical documentation through AI-powered speech-to-text transcription, intelligent medical terminology processing, and seamless EHR integration.
+MedScribe Pain Pro eliminates chart fatigue for interventional and chronic pain management physicians. Record or paste a patient encounter, let the AI populate structured pain management notes, resolve any unanswered clinical or compliance fields in seconds using context-aware 1-click AI suggestions, push to DrChrono, and **automatically shred the raw transcript from RAM**.
 
 ---
 
-## 🚀 **Key Features**
+## Key Capabilities
 
-### 🎯 **Core Functionality**
-- **Real-time Speech Transcription** - Advanced Web Speech API integration with medical terminology optimization
-- **AI-Powered Documentation** - Intelligent SOAP note generation and clinical data extraction
-- **EHR Integration** - Comprehensive field mapping and form injection for major EHR systems
-- **Template Library** - Professional documentation templates for multiple medical specialties
-- **Enterprise Security** - HIPAA-compliant data handling with encryption and audit trails
+### 1. Built Specifically for Pain Management (3 Templates)
+- **Chronic Pain Follow-Up & Medication Management** — OPQRST, 4-point NRS pain severity, PEG-3 functional outcome tracking, cauda equina/neuro red flags, opioid & multimodal regimen review, PDMP/UDS/Naloxone compliance, focused spine/MSK/neuro exam, imaging, assessment, and multimodal plan.
+- **New Patient Pain Management Consultation** — Comprehensive pain trajectory, payer prior-authorization-ready failed conservative treatments, psychosocial & Opioid Risk Tool (ORT) screening, full neuro-MSK exam, diagnostic review, and initial multimodal roadmap.
+- **Interventional Pain Procedure Note** — Fluoroscopy/ultrasound-guided ESI, MBB, RFA, and SI/joint procedures with informed consent/universal time-out/ASRA anticoagulation verification, needle placement & contrast spread (negative vascular/intrathecal uptake), injectate composition, sedation/monitoring, EBL/complications, pre/post NRS relief %, and discharge plan.
 
-### 🔒 **Advanced Capabilities**
-- **Learning AI System** - Adapts to individual clinician documentation patterns and preferences
-- **Multi-specialty Support** - Specialized templates and terminology for pain management, cardiology, orthopedics, and primary care
-- **Performance Optimization** - Advanced caching, batch processing, and resource management
-- **Comprehensive Settings** - Granular user preferences with validation and backup capabilities
+### 2. AI Gap-Filler Copilot (Zero Typing for Unanswered Fields)
+- Never hallucinates missing details into `Filled` fields.
+- Flags every **Unanswered** or **Partial** clinical/compliance field (prioritizing compliance-critical items like Red Flags, PDMP/UDS/Naloxone, ASRA anticoagulation hold, and contrast uptake).
+- Generates **2–3 conversation-aware clinical suggestions** per gap with a rationale and confidence score so clinicians can complete their entire note in a few clicks.
 
-### 🤖 **Security & Compliance**
-- **HIPAA Compliance** - End-to-end encryption, secure data handling, and comprehensive audit logging
-- **Data Protection** - Automatic retention policies, secure storage, and controlled access
-- **Session Management** - Secure session handling with timeout controls
-- **Audit Trail** - Complete activity logging for compliance and security monitoring
+### 3. Real-Time Pain Clinical Calculators & Coding
+- **CDC MME Calculator (`@medscribe/core`)**: Automatically calculates total daily Morphine Milligram Equivalents from the encounter, flags `>=50` and `>=90 MME/day` thresholds, detects concurrent benzodiazepine co-prescribing (FDA Boxed Warning), and flags Naloxone recommendations.
+- **PEG-3 Functional Outcome Score**: Extracts and computes the Pain / Enjoyment / General Activity composite score (0–10).
+- **Pain ICD-10 & CPT Code Suggestions**: Suggests relevant pain management codes (`M54.16`, `M51.16`, `M47.816`, `M54.12`, `G89.29`, `Z79.891`, `99214`, `99204`, `64483`, `62323`, `64493`, `64635`, `27096`).
 
----
+### 4. Strict Fill-and-Purge (Zero Transcript Retention)
+- `EphemeralTranscriptVault` keeps raw encounter transcripts strictly in a volatile RAM `Uint8Array` — **never** written to `localStorage`, `sessionStorage`, `IndexedDB`, or disk.
+- Pushing to DrChrono or clicking **Shred** immediately overwrites the RAM buffer with random bytes + zeros, strips any raw `sourceQuote` snippets from the note, and issues a **PHI-free SHA-256 Purge Receipt**.
 
-## 📋 **What It Extracts**
+### 5. DrChrono EMR Integration (Web App + Chrome Extension)
+- **Web App (`apps/web`)**: Formats structured `clinical_note_field_values`, ICD-10/CPT codes, and clinical narrative for DrChrono's Clinical Notes API (supports live OAuth Bearer Token push or Dry-Run/Clipboard export).
+- **Chrome Extension (`apps/extension`)**: Manifest V3 Side Panel + DrChrono content script (`https://*.drchrono.com/*`) that discovers DrChrono clinical note inputs, injects every pain management field with visual confirmation highlights, and immediately purges the transcript upon success.
 
-MedScribe Pro automatically identifies and structures:
-
-| **Category** | **Examples** |
-|--------------|--------------|
-| **Vital Signs** | Blood pressure, heart rate, temperature, weight, height |
-| **Symptoms** | Chest pain, shortness of breath, headache, nausea |
-| **Medications** | Current prescriptions, dosages, frequencies |
-| **Allergies** | Drug allergies, environmental sensitivities |
-| **Assessment** | Clinical impressions, diagnoses |
-| **Plan** | Treatment recommendations, follow-up instructions |
+### 6. Pluggable AI Engine (Works Immediately With Zero API Keys)
+- Runs out of the box with a built-in **Local Pain Management NLP & Gap-Suggestion Engine** (zero API keys required) plus 3 realistic sample pain encounters.
+- Plug in your own **Anthropic Claude**, **OpenAI**, or **Google Gemini** API key at any time via **Engine Settings**.
 
 ---
 
-## 🎥 **Demo Scenarios**
+## Monorepo Architecture
 
-### **Scenario 1: Routine Check-up**
-```
-Doctor: "Patient presents with chest pain, blood pressure 140 over 90, 
-heart rate 88, taking lisinopril, allergic to penicillin. Assessment 
-is hypertension, plan to increase medication and follow up in 2 weeks."
-```
-
-**MedScribe Pro Output:**
-- ✅ **Symptoms:** Chest pain
-- ✅ **Vitals:** BP 140/90, HR 88
-- ✅ **Medications:** Lisinopril  
-- ✅ **Allergies:** Penicillin
-- ✅ **Assessment:** Hypertension
-- ✅ **Plan:** Increase medication, follow-up 2 weeks
-
-### **Scenario 2: Complex Case**
-```
-Doctor: "67-year-old female with diabetes and hypertension presents 
-with dyspnea on exertion. Physical exam shows bilateral edema and 
-lung crackles. Assessment is CHF exacerbation. Plan includes chest 
-x-ray, BNP, increase furosemide to 40mg daily."
-```
-
-**AI-Enhanced Processing:**
-- 🧠 **Patient Demographics:** 67-year-old female
-- 🧠 **Medical History:** Diabetes, hypertension  
-- 🧠 **Chief Complaint:** Dyspnea on exertion
-- 🧠 **Physical Exam:** Bilateral edema, lung crackles
-- 🧠 **Diagnostic Orders:** Chest x-ray, BNP
-- 🧠 **Treatment Plan:** Furosemide 40mg daily
-
----
-
-## 🏥 **DrChrono Integration**
-
-### **Automatic Detection**
-- Detects when you're on a DrChrono patient page
-- Extracts patient information automatically
-- Shows visual indicators when extension is active
-
-### **Smart Form Filling**
-- Maps extracted data to appropriate DrChrono form fields
-- Handles vitals, chief complaint, assessment, and plan
-- Provides visual feedback when data is filled
-- Maintains data accuracy with confidence indicators
-
-### **Session Management**
-- Uses existing DrChrono browser session (no separate login)
-- Automatic token refresh and session monitoring
-- CSRF token handling for secure form submissions
-
----
-
-## 📊 **Generated SOAP Notes**
-
-Example AI-generated SOAP note:
-
-```
-SUBJECTIVE:
-Patient is a 45-year-old male who presents with chest pain and shortness 
-of breath for 2 days. Current medications include lisinopril and aspirin. 
-Known allergies to penicillin.
-
-OBJECTIVE:
-Vital signs: BP 150/95, HR 102, Temp 98.6°F. Physical examination shows 
-mild respiratory distress with clear lung sounds bilaterally.
-
-ASSESSMENT:
-Chest pain syndrome, rule out cardiac etiology. Hypertension, uncontrolled.
-
-PLAN:
-EKG and chest x-ray ordered. Cardiology consultation requested. Continue 
-current medications. Patient counseled on symptoms requiring immediate 
-medical attention. Follow-up in 48 hours or sooner if symptoms worsen.
+```text
+medscribe-pro-demo/
+├── packages/
+│   └── core/                  # @medscribe/core — shared domain engine
+│       ├── src/templates/     # 3 Pain Management clinical templates
+│       ├── src/clinical/      # CDC MME calculator, PEG-3 scorer, ICD-10/CPT matcher
+│       ├── src/ai/            # Pluggable Claude/OpenAI/Gemini + Zero-Key Demo Engine
+│       ├── src/ephemeral/     # EphemeralTranscriptVault (RAM-only + SHA-256 PurgeReceipt)
+│       ├── src/emr/           # DrChrono API adapter & DOM field selector map
+│       ├── src/samples/       # 3 realistic pain management sample encounters
+│       └── src/tests/         # Automated unit test suite
+├── apps/
+│   ├── web/                   # React + TypeScript + Tailwind standalone clinical workspace
+│   └── extension/             # Manifest V3 Chrome Extension (Side Panel + DrChrono injector)
+└── package.json               # npm workspaces root
 ```
 
 ---
 
-## 🔧 **Installation & Setup**
+## Quick Start
 
-### **Prerequisites**
-- Google Chrome browser (latest version)
-- Active DrChrono account with appropriate permissions
-- Microphone access for speech recognition
-- HTTPS connection (required for Web Speech API)
+### Prerequisites
+- Node.js 20+ and npm 10+
 
-### **Development Installation**
-1. **Clone Repository**
-   ```bash
-   git clone <repository-url>
-   cd medscribe-pro-extension
-   ```
-
-2. **Load Extension**
-   - Open Chrome and navigate to `chrome://extensions/`
-   - Enable "Developer mode"
-   - Click "Load unpacked" and select the project directory
-
-3. **Configure EHR Connection**
-   - Navigate to your EHR system (currently supports DrChrono)
-   - Click the MedScribe Pro extension icon
-   - Follow authentication prompts
-
-### **Configuration**
-
-#### General Settings
-- **Theme**: Light, dark, or automatic theme selection
-- **Language**: Interface and transcription language preferences
-- **Notifications**: Control system notification preferences
-- **Auto-save**: Automatic transcription saving options
-
-#### AI Processing
-- **Claude Integration**: Optional enhanced AI processing
-- **Learning Mode**: Enable adaptive learning capabilities
-- **Template Preferences**: Default template selections
-- **Specialty Configuration**: Medical specialty-specific optimizations
-
-#### Security Settings
-- **Data Retention**: Configurable data retention periods
-- **Encryption**: Data encryption preferences
-- **Session Timeout**: Security session management
-- **Audit Logging**: Comprehensive activity logging
-
----
-
-## 💡 **Use Cases**
-
-### **Primary Care**
-- Routine check-ups and physical exams
-- Chronic disease management visits
-- Medication reviews and adjustments
-
-### **Specialists**
-- Cardiology consultations
-- Endocrinology follow-ups
-- Pain management assessments
-
-### **Emergency Medicine**
-- Rapid documentation during busy shifts
-- Consistent formatting across providers
-- Reduced documentation time
-
----
-
-## 🛠️ **Technical Architecture**
-
-### **Architecture**
+### Install & Run Web App
+```bash
+npm install
+npm run build:core
+npm run dev
 ```
-medscribe-pro-extension/
-├── manifest.json              # Extension manifest
-├── src/
-│   ├── popup/                 # Main user interface
-│   ├── content/               # EHR page integration
-│   ├── background/            # Service worker
-│   ├── options/               # Settings interface
-│   └── utils/                 # Core utilities
-│       ├── ai-processor.js    # AI processing engine
-│       ├── ehr-integration.js # EHR integration manager
-│       ├── security-manager.js # Security and compliance
-│       ├── template-library.js # Documentation templates
-│       ├── settings-manager.js # User preferences
-│       └── performance-manager.js # Performance optimization
-├── assets/                    # Static resources
-└── README.md
+Open `http://localhost:5173`, click any of the **Sample Pain Encounters** on the left, review the auto-calculated MME/PEG-3 and 1-click **AI Gap-Filler Copilot** suggestions on the right, and click **Push to DrChrono & Shred Transcript**.
+
+### Run Unit Tests & Full Production Build
+```bash
+npm test
+npm run build
 ```
 
-### **Core Components**
-
-#### AI Processing Engine
-- Advanced medical text processing
-- Learning and adaptation capabilities
-- Template-based document generation
-- Quality metrics and confidence scoring
-
-#### EHR Integration Manager
-- Multi-EHR support framework
-- Comprehensive field mapping
-- Form detection and injection
-- Error handling and retry logic
-
-#### Security Manager
-- Enterprise-grade security implementation
-- HIPAA compliance features
-- Audit logging and monitoring
-- Data protection and encryption
-
-#### Template Library
-- Professional documentation templates
-- Specialty-specific formats
-- Custom template creation
-- Import/export capabilities
-
-### **Data Flow**
-```
-Speech → Web Speech API → Medical AI → Structured Data → EHR Forms
-   ↓                                                            ↑
-Local Encrypted Storage ←←←←←←←← Audit Trail ←←←←←←←←←←←←←←←←←←←←
-```
+### Load the DrChrono Chrome Extension
+1. Run `npm run build` (builds `apps/extension/dist/`).
+2. Open Chrome and go to `chrome://extensions/`.
+3. Enable **Developer mode**, click **Load unpacked**, and select `apps/extension/dist`.
+4. Open any `*.drchrono.com` clinical note page and click the **MedScribe Pain Pro** toolbar icon to open the Side Panel.
 
 ---
 
-## 🔒 **Privacy & Security**
-
-### **Data Protection**
-- **AES-256 Encryption**: All stored data encrypted using industry-standard methods
-- **Secure Storage**: Chrome storage APIs with additional security layers
-- **Data Classification**: Automatic PHI/PII classification and handling
-- **Retention Policies**: Configurable automated data cleanup
-- **No Audio Storage**: Speech recordings processed in real-time and not stored
-
-### **HIPAA Compliance**
-- **Enterprise-grade Security**: Comprehensive security implementation
-- **Audit Trail**: Complete activity logging for compliance requirements
-- **Access Controls**: Secure authentication and session management
-- **Data Minimization**: Process only necessary medical information
-- **Business Associate Agreement**: Ready for BAA compliance
-
-### **Session Management**
-- **Secure Sessions**: Cryptographically secure session identifiers
-- **Timeout Controls**: Configurable session timeout policies
-- **Multi-factor Authentication**: Integration ready for MFA systems
-
----
-
-## 📈 **Performance Metrics**
-
-### **Accuracy**
-- **Speech Recognition:** 95%+ accuracy with clear speech
-- **Medical Term Recognition:** 90%+ for common terminology
-- **AI Processing Confidence:** 85%+ average confidence scores
-
-### **Speed**
-- **Real-time Transcription:** <500ms latency
-- **AI Processing:** 2-5 seconds for full analysis
-- **Form Filling:** Instant insertion with visual feedback
-
----
-
-## 🆘 **Troubleshooting**
-
-### **Common Issues**
-
-**Microphone Not Working**
-- Check Chrome microphone permissions
-- Ensure HTTPS connection
-- Verify microphone works in other applications
-
-**Poor Transcription Quality**
-- Speak clearly and avoid background noise
-- Check microphone positioning
-- Enable medical terminology enhancement
-
-**DrChrono Integration Issues**
-- Refresh DrChrono page and try again
-- Ensure you're signed into DrChrono
-- Verify you're on a supported form page
-
-### **Debug Mode**
-Enable debug mode in extension settings for detailed logging and troubleshooting information.
-
----
-
-## 🏆 **Why MedScribe Pro?**
-
-### **For Healthcare Providers**
-- ⏱️ **Save Time** - Reduce documentation time by 60%
-- 📝 **Improve Accuracy** - AI-powered consistency and completeness
-- 🔄 **Seamless Workflow** - Integrates with existing DrChrono workflow
-- 🛡️ **Stay Compliant** - Built-in HIPAA compliance features
-
-### **For Healthcare Organizations**
-- 💰 **Cost Effective** - Reduce administrative overhead
-- 📊 **Better Documentation** - Consistent, structured clinical notes
-- 🔐 **Security First** - Enterprise-grade data protection
-- 📈 **Scalable** - Works across departments and specialties
-
----
-
-## 📞 **Support & Contact**
-
-For questions, support, or feature requests:
-
-- 📧 **Email:** [Contact for access]
-- 🐛 **Bug Reports:** [Contact for access]
-- 💡 **Feature Requests:** [Contact for access]
-- 📖 **Documentation:** [Contact for access]
-
----
-
-## ⚖️ **Legal & Compliance**
-
-### **Disclaimer**
-MedScribe Pro is a tool to assist healthcare professionals with documentation. It is not a substitute for professional medical judgment, diagnosis, or treatment. Always verify all extracted information before using in patient care.
-
-### **License**
-MIT License - See license file for details.
-
-### **HIPAA Notice**
-This software is designed to be HIPAA-compliant when used according to best practices. Healthcare organizations should conduct their own compliance review.
-
----
-
-## 🔄 **Version History**
-
-### **v1.0.0** - Current
-- ✅ Initial release with core transcription features
-- ✅ DrChrono integration and form auto-filling
-- ✅ HIPAA-compliant security implementation
-- ✅ AI-powered SOAP note generation
-- ✅ SSO authentication support
-
-### **Roadmap**
-- 🔮 Enhanced AI processing with additional medical models
-- 🔮 Support for additional EHR systems (Epic, Cerner)
-- 🔮 Mobile companion application
-- 🔮 Advanced analytics and reporting features
-- 🔮 Voice commands for hands-free operation
-
----
-
-**🎉 Transform your medical documentation workflow with AI-powered transcription!**
-
----
-
-*This is a demonstration repository showcasing the capabilities of MedScribe Pro. The actual source code is maintained in a private repository for security and compliance purposes.*
+## Clinical & HIPAA Disclaimer
+MedScribe Pain Pro is a clinical documentation assistant and does not replace independent medical judgment. Physicians must review and verify all extracted fields, AI suggestions, MME calculations, and billing codes prior to signing clinical notes. For production HIPAA deployments, route external LLM requests through a BAA-covered backend proxy.
